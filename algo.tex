@@ -1,0 +1,94 @@
+\documentclass[a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=10mm,
+ right=10mm,
+ top=20mm,
+ bottom=20mm,
+ }
+
+\begin{document}
+%tabulation
+\newlength\myindent
+\setlength\myindent{2em}
+\newcommand\bindent{%
+  \begingroup
+  \setlength{\itemindent}{\myindent}
+  \addtolength{\algorithmicindent}{\myindent}
+}
+\newcommand\eindent{\endgroup}
+
+% New definitions
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algnewcommand\algorithmicassert{\texttt{assert}}
+\algnewcommand\Assert[1]{\State \algorithmicassert(#1)}%
+% New "environments"
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
+\begin{enumerate}
+
+ \item algorithme de Model Checking à la volée pour ATL
+  %\begin{algorithm}
+   %\caption{Merge Sort}
+    \begin{algorithmic}[1]
+      \Procedure{\bf update }{$b,\sigma $}%\Comment{}
+   		
+        \State \bf $flag := b$ ;
+        \If {$( \not b)$} 
+        	\State $ F := F \cup \{\sigma \}$
+        \EndIf
+      \EndProcedure{ UPDATE}
+      \\
+      \Procedure{McTO}{$\sigma $}
+        \If {$ \sigma \in V$}
+        	\If {$\sigma \in F$}
+            	\State $flag := false$
+            \Else
+            	\State $flag := true $
+            \EndIf 
+        \Else
+        	\State $V := V \cup \{\sigma \};$
+        	
+        	\Case {$ \sigma $}
+				\State $S \vdash l: $
+						\State $ \ \ \ \ \	update (S \vdash l,\sigma)$            
+				\State $S \vdash p_1 \wedge p_2 $
+						\State $ \ \ \ \ \	update (McTO(S \vdash p_1) $ and $MCTO(S \vdash p_2),\sigma)$            
+				\State $S \vdash p_1 \vee p_2 $
+						\State $ \ \ \ \ \	update (McTO(S \vdash p_1) $ or $MCTO(S \vdash p_2),\sigma)$            
+				\State $S \vdash \Phi $
+						\State $ \ \ \ \ \	update (McATL(\sigma),\sigma)$	        
+            \EndCase{end case}
+        \EndIf
+        
+        \State Return{ $(flag)$}
+       \EndProcedure{ MCTO}
+
+	\end{algorithmic}
+	
+	\item  algorithme 	
+
+   \begin{algorithmic}[1]
+	\Procedure{McATL}{$\sigma$}
+			
+		
+	\EndProcedure{}
+   \end{algorithmic}
+%\end{algorithm}
+\end{enumerate}
+\end{document}
